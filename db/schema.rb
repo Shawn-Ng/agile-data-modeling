@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170903072331) do
+ActiveRecord::Schema.define(version: 20170903082517) do
 
   create_table "belt_attempts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.boolean  "pass"
@@ -28,6 +28,13 @@ ActiveRecord::Schema.define(version: 20170903072331) do
     t.text     "description", limit: 65535
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.boolean  "is_child"
+  end
+
+  create_table "families", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "gradings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
@@ -55,7 +62,10 @@ ActiveRecord::Schema.define(version: 20170903072331) do
     t.integer  "user_id"
     t.datetime "grading_date"
     t.integer  "belt_id"
+    t.boolean  "is_child"
+    t.integer  "family_id"
     t.index ["belt_id"], name: "index_students_on_belt_id", using: :btree
+    t.index ["family_id"], name: "index_students_on_family_id", using: :btree
     t.index ["user_id"], name: "index_students_on_user_id", using: :btree
   end
 
@@ -92,6 +102,7 @@ ActiveRecord::Schema.define(version: 20170903072331) do
   add_foreign_key "belt_attempts", "students"
   add_foreign_key "membership_holds", "students"
   add_foreign_key "students", "belts"
+  add_foreign_key "students", "families"
   add_foreign_key "students", "users"
   add_foreign_key "transactions", "transaction_types"
   add_foreign_key "transactions", "users"

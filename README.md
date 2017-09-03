@@ -72,4 +72,9 @@ rails g migration AddDetailsToBeltAttempts student:references belt:references gr
 For this iteration we have three user stories to implement: Enroll child student, Offer family membership plan, and Support child belt system. Adding support for child memberships was bit of work. Children have a different set of belts than adults do. Children also have striped belts (white with stripe, yellow with stripe, …) in addition to the normal adult colors and two additional colors: red and purple. Kids have more belts in order to keep them engaged. Most adults understand that it could take six to twelve months to earn their next belt but try explaining that to a four year old.  In addition to the application code changes we added an IsChild column to the Belt table as well as new rows for the child belts. We also needed an IsChild column to the Student table as well. People progress from the children to the adult classes when they've reached an appropriate level of maturity and skill, not just because of their age, so a birthdate column wasn't appropriate. To support family memberships we added the Family table to keep track of who was in a given family. We added a corresponding FamilyPOID column in Student to act as a foreign key to the new table. Most students are not on a family membership so this column will often have a null value.
 
 ```ruby
+rails g model Family name:string
+
+rails g migration AddDetails2ToStudents is_child:boolean family:references
+
+rails g migration AddIsChildToBelts is_child:boolean
 ```
