@@ -10,12 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170903053951) do
+ActiveRecord::Schema.define(version: 20170903072331) do
+
+  create_table "belt_attempts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.boolean  "pass"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "student_id"
+    t.integer  "belt_id"
+    t.integer  "grading_id"
+    t.index ["belt_id"], name: "index_belt_attempts_on_belt_id", using: :btree
+    t.index ["grading_id"], name: "index_belt_attempts_on_grading_id", using: :btree
+    t.index ["student_id"], name: "index_belt_attempts_on_student_id", using: :btree
+  end
 
   create_table "belts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.text     "description", limit: 65535
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+  end
+
+  create_table "gradings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.datetime "date"
+    t.time     "time"
+    t.decimal  "cost",       precision: 15, scale: 5
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
+  create_table "membership_holds", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "student_id"
+    t.index ["student_id"], name: "index_membership_holds_on_student_id", using: :btree
   end
 
   create_table "students", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
@@ -58,6 +87,10 @@ ActiveRecord::Schema.define(version: 20170903053951) do
     t.string   "email"
   end
 
+  add_foreign_key "belt_attempts", "belts"
+  add_foreign_key "belt_attempts", "gradings"
+  add_foreign_key "belt_attempts", "students"
+  add_foreign_key "membership_holds", "students"
   add_foreign_key "students", "belts"
   add_foreign_key "students", "users"
   add_foreign_key "transactions", "transaction_types"
