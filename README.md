@@ -78,3 +78,8 @@ rails g migration AddDetails2ToStudents is_child:boolean family:references
 
 rails g migration AddIsChildToBelts is_child:boolean
 ```
+
+
+## Iteration 5
+For this iteration we have five user stories to implement: Enroll student in Tai Chi, Support Tai Chi belt system, Enroll student in cardio kick boxing, Support Tai Chi belt system, and Support the belt order for each style. This iteration focused on supporting non-Karate styles of training, each of which has its own approach to belts.  For example Tai Chi only has white belt and black belts and cardio kickboxing doesn't have any belts at all. A Style table was added to implement the current requirements and it may make it easy to support new styles in the future although we won't know for sure until we have actual requirements to do so. The StylePOID column was added to the Belt table to indicate which style a given belt is for - there would be a white belt record for Tai Chi as well as for Karate. 
+
