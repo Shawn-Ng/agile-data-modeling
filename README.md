@@ -83,3 +83,31 @@ rails g migration AddIsChildToBelts is_child:boolean
 ## Iteration 5
 For this iteration we have five user stories to implement: Enroll student in Tai Chi, Support Tai Chi belt system, Enroll student in cardio kick boxing, Support Tai Chi belt system, and Support the belt order for each style. This iteration focused on supporting non-Karate styles of training, each of which has its own approach to belts.  For example Tai Chi only has white belt and black belts and cardio kickboxing doesn't have any belts at all. A Style table was added to implement the current requirements and it may make it easy to support new styles in the future although we won't know for sure until we have actual requirements to do so. The StylePOID column was added to the Belt table to indicate which style a given belt is for - there would be a white belt record for Tai Chi as well as for Karate. 
 
+```ruby
+rails g model StudentBelt
+
+rails g migration AddRefsToStudentBelt student:references belt:references
+
+# after changing the student and belt model, remove the belt_id (foreign key) from student
+# https://stackoverflow.com/questions/35019286/rails-converting-a-has-many-relationship-into-a-has-and-belongs-to-many
+rails g migration RemoveBeltIdFromStudent belt:references
+
+rails g model Style description:text has_belts:boolean
+
+rails g migration AddStyleRefToBelt style:references style_sequence:integer
+```
+
+
+## Iteration 6
+For this iteration we have two user stories to implement: Maintain product information and Sell product. These additions are very straightforward from a data modeling point of view, we simply added the Order, OrderItem, and Item tables to handle this basic functionality. Notice how these tables are fairly simple for now. For example we're not maintaining stock levels yet nor are we maintaining supplier information. Although we will likely need that sort of information for future requirements we don't need them now so we won't implement them now.
+
+```ruby
+rails g model Order order_date:datetime transaction_id:references user:references
+# update Order model, refer to the url
+
+rails g model OrderItem 'price:decimal{15,5}' quantity:integer order:references
+
+rails g model Item item_number:integer description:text 'price:decimal{15,5}'
+
+rails g migration AddItemRefToOrderItem item:references
+```
