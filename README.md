@@ -1,6 +1,7 @@
 #  Agile Model Driven Development (AMDD) approach
 
 source: http://agiledata.org/essays/agileDataModeling.html
+
 uml: http://www.tomjewett.com/dbdesign/dbdesign.php?page=intro.html
 
 #### Critical Lessons in Agile Data Modeling
