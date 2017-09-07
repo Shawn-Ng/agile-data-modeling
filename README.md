@@ -1,6 +1,7 @@
 #  Agile Model Driven Development (AMDD) approach
 
-http://agiledata.org/essays/agileDataModeling.html
+source: http://agiledata.org/essays/agileDataModeling.html
+uml: http://www.tomjewett.com/dbdesign/dbdesign.php?page=intro.html
 
 #### Critical Lessons in Agile Data Modeling
 1. Agile data modelers travel light and create agile models which are just barely good enough.
